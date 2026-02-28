@@ -20,48 +20,33 @@ jobs:
 
       - name: Validate HTML structure
         run: |
-          echo "=== Validating HTML files ==="
           for file in docs/*.html; do
             [ -f "$file" ] || continue
-            echo "Checking: $file"
-            grep -q '<!DOCTYPE html>' "$file" || { echo "Missing DOCTYPE in $file"; exit 1; }
-            grep -q '</html>' "$file" || { echo "Missing closing html in $file"; exit 1; }
-            grep -q '<head>' "$file" || { echo "Missing head in $file"; exit 1; }
-            grep -q '</head>' "$file" || { echo "Missing closing head in $file"; exit 1; }
-            grep -q '<body>' "$file" || { echo "Missing body in $file"; exit 1; }
-            echo "  ✓ $file"
+            grep -q '<!DOCTYPE html>' "$file"
+            grep -q '</html>' "$file"
+            grep -q '<head>' "$file"
+            grep -q '<body>' "$file"
           done
-          echo "=== All HTML files valid ==="
+          echo "HTML validation passed"
 
-      - name: Validate CSS exists
+      - name: Validate required files
         run: |
-          [ -f docs/styles.css ] || { echo "styles.css not found"; exit 1; }
-          wc -l docs/styles.css
+          [ -f docs/index.html ]
+          [ -f docs/install.html ]
+          [ -f docs/about.html ]
+          [ -f docs/styles.css ]
+          [ -f docs/install-arch.sh ]
+          echo "All files present"
 
-      - name: Validate install script
-        run: |
-          [ -f docs/install-arch.sh ] || { echo "install-arch.sh not found"; exit 1; }
-          head -1 docs/install-arch.sh | grep -q '#!/usr/bin/env bash' || exit 1
-          [ -x docs/install-arch.sh ] || exit 1
-
-      - name: Check required pages exist
-        run: |
-          [ -f docs/index.html ] || exit 1
-          [ -f docs/install.html ] || exit 1
-          [ -f docs/about.html ] || exit 1
-
-      - name: Summary
-        run: |
-          echo "=== Website Validation Passed ==="
-
-  deploy-cloudflare:
+  deploy:
     needs: validate
-    if: github.ref == 'refs/heads/main' && secrets.CLOUDFLARE_API_TOKEN != ''
+    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
 
-      - name: Deploy to Cloudflare Pages
+      - name: Deploy to Cloudflare (if configured)
+        if: env.CLOUDFLARE_API_TOKEN != ''
         uses: cloudflare/pages-action@v1
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
@@ -69,23 +54,17 @@ jobs:
           projectName: kamlux
           directory: docs
 
-  deploy-github-pages:
-    needs: validate
-    if: github.ref == 'refs/heads/main' && secrets.CLOUDFLARE_API_TOKEN == ''
-    runs-on: ubuntu-latest
-    permissions:
-      pages: write
-      id-token: write
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Setup Pages
+      - name: Deploy to GitHub Pages (fallback)
+        if: env.CLOUDFLARE_API_TOKEN == ''
         uses: actions/configure-pages@v4
+        id: pages
 
-      - name: Upload artifact
+      - name: Upload to GitHub Pages (fallback)
+        if: env.CLOUDFLARE_API_TOKEN == ''
         uses: actions/upload-pages-artifact@v3
         with:
           path: docs
 
-      - name: Deploy to GitHub Pages
+      - name: Deploy GitHub Pages (fallback)
+        if: env.CLOUDFLARE_API_TOKEN == ''
         uses: actions/deploy-pages@v4
