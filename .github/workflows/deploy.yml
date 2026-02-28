@@ -22,49 +22,46 @@ jobs:
         run: |
           for file in docs/*.html; do
             [ -f "$file" ] || continue
-            grep -q '<!DOCTYPE html>' "$file"
-            grep -q '</html>' "$file"
-            grep -q '<head>' "$file"
-            grep -q '<body>' "$file"
+            grep -q '<!DOCTYPE html>' "$file" || { echo "Missing DOCTYPE: $file"; exit 1; }
+            grep -q '</html>' "$file" || { echo "Missing closing html: $file"; exit 1; }
+            grep -q '<head>' "$file" || { echo "Missing head: $file"; exit 1; }
+            grep -q '<body>' "$file" || { echo "Missing body: $file"; exit 1; }
+            echo "OK: $file"
           done
-          echo "HTML validation passed"
 
       - name: Validate required files
         run: |
-          [ -f docs/index.html ]
-          [ -f docs/install.html ]
-          [ -f docs/about.html ]
-          [ -f docs/styles.css ]
-          [ -f docs/install-arch.sh ]
-          echo "All files present"
+          ls docs/index.html docs/install.html docs/about.html docs/styles.css docs/install-arch.sh
 
-  deploy:
+      - name: Summary
+        run: echo "✓ Website validation passed"
+
+  deploy-cloudflare:
     needs: validate
-    if: github.ref == 'refs/heads/main'
+    if: github.ref == 'refs/heads/main' && secrets.CLOUDFLARE_API_TOKEN != ''
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-
-      - name: Deploy to Cloudflare (if configured)
-        if: env.CLOUDFLARE_API_TOKEN != ''
-        uses: cloudflare/pages-action@v1
+      - uses: cloudflare/pages-action@v1
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           projectName: kamlux
           directory: docs
 
-      - name: Deploy to GitHub Pages (fallback)
-        if: env.CLOUDFLARE_API_TOKEN == ''
-        uses: actions/configure-pages@v4
-        id: pages
-
-      - name: Upload to GitHub Pages (fallback)
-        if: env.CLOUDFLARE_API_TOKEN == ''
-        uses: actions/upload-pages-artifact@v3
+  deploy-github:
+    needs: validate
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/configure-pages@v4
+        with:
+          enablement: 'true'
+      - uses: actions/upload-pages-artifact@v3
         with:
           path: docs
-
-      - name: Deploy GitHub Pages (fallback)
-        if: env.CLOUDFLARE_API_TOKEN == ''
-        uses: actions/deploy-pages@v4
+      - uses: actions/deploy-pages@v4
