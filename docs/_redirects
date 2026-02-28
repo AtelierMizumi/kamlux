@@ -1,8 +1,9 @@
 # Cloudflare Pages Redirects
 # This file handles routing for static pages
 
-# Redirect root to index.html is handled automatically
+# Redirect clean URLs to .html files
+/about    /about.html   200
+/install  /install.html 200
 
-# All routes work without .html extension
-# /about -> /about.html
-# /install -> /install.html
+# SPA fallback (if needed in future)
+/*        /index.html   200
