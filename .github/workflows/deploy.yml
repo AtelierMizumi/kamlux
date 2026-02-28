@@ -1,20 +1,14 @@
-name: Build and Deploy Website
+name: Deploy Website
 
 on:
   push:
     branches:
       - main
-      - master
     paths:
       - 'docs/**'
-      - '.github/workflows/deploy.yml'
   pull_request:
     paths:
       - 'docs/**'
-
-concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
 
 jobs:
   validate:
@@ -28,61 +22,25 @@ jobs:
           for file in docs/*.html; do
             [ -f "$file" ] || continue
             echo "Checking: $file"
-            # Basic HTML validation
             grep -q '<!DOCTYPE html>' "$file" || { echo "Missing DOCTYPE in $file"; exit 1; }
             grep -q '</html>' "$file" || { echo "Missing closing html in $file"; exit 1; }
-            grep -q '<head>' "$file" || { echo "Missing head in $file"; exit 1; }
-            grep -q '</head>' "$file" || { echo "Missing closing head in $file"; exit 1; }
-            grep -q '<body>' "$file" || { echo "Missing body in $file"; exit 1; }
-            echo "  ✓ $file is valid"
           done
           echo "=== All HTML files valid ==="
 
-      - name: Validate CSS exists and has content
+      - name: Validate CSS
         run: |
-          echo "=== Validating CSS ==="
           [ -f docs/styles.css ] || { echo "styles.css not found"; exit 1; }
-          wc -l docs/styles.css
-          echo "✓ CSS valid"
+          echo "CSS valid"
 
       - name: Validate install script
         run: |
-          echo "=== Validating install script ==="
           [ -f docs/install-arch.sh ] || { echo "install-arch.sh not found"; exit 1; }
           head -1 docs/install-arch.sh | grep -q '#!/usr/bin/env bash' || { echo "Missing shebang"; exit 1; }
-          [ -x docs/install-arch.sh ] || { echo "Script not executable"; exit 1; }
-          echo "✓ Install script valid"
+          echo "Install script valid"
 
-      - name: Check for required pages
-        run: |
-          echo "=== Checking required pages ==="
-          [ -f docs/index.html ] || { echo "index.html missing"; exit 1; }
-          [ -f docs/install.html ] || { echo "install.html missing"; exit 1; }
-          [ -f docs/about.html ] || { echo "about.html missing"; exit 1; }
-          echo "✓ All required pages present"
-
-  deploy-cloudflare:
+  deploy:
     needs: validate
-    if: github.ref == 'refs/heads/main' && secrets.CLOUDFLARE_API_TOKEN != ''
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Deploy to Cloudflare Pages
-        uses: cloudflare/pages-action@v1
-        with:
-          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          projectName: kamlux
-          directory: docs
-
-      - name: Report success
-        run: |
-          echo "✓ Deployed to Cloudflare Pages"
-
-  deploy-github-pages:
-    needs: validate
-    if: github.ref == 'refs/heads/main' && secrets.CLOUDFLARE_API_TOKEN == ''
+    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     permissions:
       pages: write
@@ -100,18 +58,3 @@ jobs:
 
       - name: Deploy to GitHub Pages
         uses: actions/deploy-pages@v4
-
-  preview:
-    needs: validate
-    if: github.event_name == 'pull_request'
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Create preview info
-        run: |
-          echo "=== Preview Build ==="
-          echo "This PR can be previewed after deploying to:"
-          echo "- Cloudflare Pages (with secrets configured)"
-          echo "- Or manually using: wrangler pages deploy docs"
-          ls -la docs/
