@@ -6,9 +6,11 @@ on:
       - main
     paths:
       - 'docs/**'
+      - '.github/workflows/deploy.yml'
   pull_request:
     paths:
       - 'docs/**'
+      - '.github/workflows/deploy.yml'
 
 jobs:
   validate:
