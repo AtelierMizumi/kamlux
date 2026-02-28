@@ -1,0 +1,14 @@
+{
+    "device": "/dev/video0",
+    "interval": 10,
+    "smoothing_alpha": 0.8,
+"curve": [
+        [0.0, 100.0],
+        [0.31, 80.0],
+        [0.5, 40.0],
+        [0.8, 20.0],
+        [1.0, 5.0]
+    ]
+    ],
+    "override_cooldown_minutes": 30
+}
