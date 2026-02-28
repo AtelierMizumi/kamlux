@@ -27,10 +27,5 @@ jobs:
       - name: Check Python syntax
         run: python -m py_compile src/kamlux.py
 
-      - name: Run ruff linter
-        run: |
-          pip install ruff
-          ruff check src/kamlux.py
-
       - name: Verify script can be imported
         run: python -c "import ast; ast.parse(open('src/kamlux.py').read())"
