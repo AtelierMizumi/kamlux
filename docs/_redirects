@@ -4,6 +4,3 @@
 # Redirect clean URLs to .html files
 /about    /about.html   200
 /install  /install.html 200
-
-# SPA fallback (if needed in future)
-/*        /index.html   200
