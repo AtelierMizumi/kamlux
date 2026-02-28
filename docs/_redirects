@@ -1,6 +1,5 @@
 # Cloudflare Pages Redirects
-# This file handles routing for static pages
+# Maps clean URLs to .html files
 
-# Redirect clean URLs to .html files
 /about    /about.html   200
 /install  /install.html 200
