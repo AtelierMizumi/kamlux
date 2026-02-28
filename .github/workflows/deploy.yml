@@ -26,42 +26,31 @@ jobs:
             echo "Checking: $file"
             grep -q '<!DOCTYPE html>' "$file" || { echo "Missing DOCTYPE in $file"; exit 1; }
             grep -q '</html>' "$file" || { echo "Missing closing html in $file"; exit 1; }
+            grep -q '<head>' "$file" || { echo "Missing head in $file"; exit 1; }
+            grep -q '</head>' "$file" || { echo "Missing closing head in $file"; exit 1; }
+            grep -q '<body>' "$file" || { echo "Missing body in $file"; exit 1; }
+            echo "  ✓ $file"
           done
           echo "=== All HTML files valid ==="
 
-      - name: Validate CSS
+      - name: Validate CSS exists
         run: |
           [ -f docs/styles.css ] || { echo "styles.css not found"; exit 1; }
-          echo "CSS valid"
+          wc -l docs/styles.css
 
       - name: Validate install script
         run: |
           [ -f docs/install-arch.sh ] || { echo "install-arch.sh not found"; exit 1; }
-          head -1 docs/install-arch.sh | grep -q '#!/usr/bin/env bash' || { echo "Missing shebang"; exit 1; }
-          echo "Install script valid"
+          head -1 docs/install-arch.sh | grep -q '#!/usr/bin/env bash' || exit 1
+          [ -x docs/install-arch.sh ] || exit 1
 
-      - name: List files
-        run: ls -la docs/
+      - name: Check required pages exist
+        run: |
+          [ -f docs/index.html ] || exit 1
+          [ -f docs/install.html ] || exit 1
+          [ -f docs/about.html ] || exit 1
 
-  deploy:
-    needs: validate
-    if: github.ref == 'refs/heads/main'
-    runs-on: ubuntu-latest
-    permissions:
-      pages: write
-      id-token: write
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Setup Pages
-        uses: actions/configure-pages@v4
-        id: pages
-
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: docs
-
-      - name: Deploy to GitHub Pages
-        uses: actions/deploy-pages@v4
-        if: steps.pages.outputs.url != ''
+      - name: Summary
+        run: |
+          echo "=== Website Validation Passed ==="
+          echo "Files ready for deployment"
