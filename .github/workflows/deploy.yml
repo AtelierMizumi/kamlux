@@ -40,6 +40,9 @@ jobs:
           head -1 docs/install-arch.sh | grep -q '#!/usr/bin/env bash' || { echo "Missing shebang"; exit 1; }
           echo "Install script valid"
 
+      - name: List files
+        run: ls -la docs/
+
   deploy:
     needs: validate
     if: github.ref == 'refs/heads/main'
@@ -52,6 +55,7 @@ jobs:
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
+        id: pages
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
@@ -60,3 +64,4 @@ jobs:
 
       - name: Deploy to GitHub Pages
         uses: actions/deploy-pages@v4
+        if: steps.pages.outputs.url != ''
