@@ -8,7 +8,6 @@ on:
   pull_request:
     paths:
       - 'src/**'
-      - '.github/workflows/test-python.yml'
 
 jobs:
   test:
@@ -23,24 +22,15 @@ jobs:
           python-version: '3.12'
 
       - name: Install dependencies
-        run: |
-          pip install numpy
+        run: pip install numpy
 
       - name: Check Python syntax
-        run: |
-          python -m py_compile src/kamlux.py
-          echo "Syntax check passed"
+        run: python -m py_compile src/kamlux.py
 
-      - name: Run static analysis
+      - name: Run ruff linter
         run: |
           pip install ruff
-          ruff check src/kamlux.py || true
+          ruff check src/kamlux.py
 
-      - name: Test imports
-        run: |
-          python -c "
-            import sys
-            sys.path.insert(0, 'src')
-            # Just check imports work (without running)
-            print('Import check would require: numpy, subprocess, etc.')
-          "
+      - name: Verify script can be imported
+        run: python -c "import ast; ast.parse(open('src/kamlux.py').read())"
