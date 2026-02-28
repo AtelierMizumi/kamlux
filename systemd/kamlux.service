@@ -1,12 +1,15 @@
 [Unit]
 Description=Kamlux Auto Brightness Daemon
-After=plasma-workspace.target
+Documentation=https://github.com/yourusername/kamlux
+After=graphical.target
 
 [Service]
 Type=simple
-ExecStart=%h/.local/bin/kamlux
+ExecStart=%h/.local/share/kamlux/kamlux.py
 Restart=on-failure
-RestartSec=10
+RestartSec=5
+Environment=HOME=%h
+Environment=XDG_RUNTIME_DIR=%t
 
 [Install]
 WantedBy=default.target

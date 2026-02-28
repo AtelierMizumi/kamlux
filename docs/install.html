@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Install - Kamlux</title>
+    <meta name="description" content="Install Kamlux - Automatic brightness for KDE Plasma">
+    <link rel="stylesheet" href="/styles.css">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>☀️</text></svg>">
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="/" class="logo">☀️ Kamlux</a>
+            <ul class="nav-links">
+                <li><a href="/">Home</a></li>
+                <li><a href="/install" class="active">Install</a></li>
+                <li><a href="/about">About</a></li>
+                <li><a href="https://github.com/yourusername/kamlux" target="_blank" rel="noopener">GitHub</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="page-header">
+            <h1>Installation Guide</h1>
+            <p>Get Kamlux running on your KDE Plasma system</p>
+        </section>
+
+        <section class="install-section">
+            <h2 id="arch-linux">Arch Linux</h2>
+            
+            <div class="install-method">
+                <h3>Method 1: Quick Install (Recommended)</h3>
+                <pre><code>curl -sL https://yourusername.github.io/kamlux/install-arch.sh | bash</code></pre>
+                <p>Or download and run manually:</p>
+                <pre><code>wget https://yourusername.github.io/kamlux/install-arch.sh
+chmod +x install-arch.sh
+./install-arch.sh</code></pre>
+                <p>The installer will:</p>
+                <ul>
+                    <li>Check dependencies (python3, v4l-utils)</li>
+                    <li>Ask for your preferences</li>
+                    <li>Install to ~/.local/share/kamlux</li>
+                    <li>Create systemd user service</li>
+                </ul>
+            </div>
+
+            <div class="install-method">
+                <h3>Method 2: Manual Install</h3>
+                <pre><code># Install dependencies
+sudo pacman -S python python-v4l-utils
+
+# Create directories
+mkdir -p ~/.local/share/kamlux
+mkdir -p ~/.config/kamlux
+
+# Clone repository
+git clone https://github.com/yourusername/kamlux.git
+cd kamlux
+
+# Copy files
+cp src/kamlux.py ~/.local/share/kamlux/
+cp src/config.json ~/.config/kamlux/config.json
+chmod +x ~/.local/share/kamlux/kamlux.py
+
+# Create launcher
+mkdir -p ~/.local/bin
+echo '#!/bin/bash' > ~/.local/bin/kamlux
+echo 'python3 "$HOME/.local/share/kamlux/kamlux.py" "$@"' >> ~/.local/bin/kamlux
+chmod +x ~/.local/bin/kamlux
+
+# Add to PATH (add to ~/.bashrc or ~/.zshrc)
+echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.bashrc
+
+# Setup systemd service
+mkdir -p ~/.config/systemd/user
+cp systemd/kamlux.service ~/.config/systemd/user/
+systemctl --user daemon-reload
+systemctl --user enable --now kamlux.service</code></pre>
+            </div>
+
+            <div class="install-method">
+                <h3>Method 3: AUR (Coming Soon)</h3>
+                <pre><code># Once published on AUR
+yay -S kamlux</code></pre>
+                <p><em>AUR package coming soon!</em></p>
+            </div>
+        </section>
+
+        <section class="install-section">
+            <h2 id="other-distros">Other Distributions</h2>
+            
+            <div class="install-method">
+                <h3>Debian/Ubuntu</h3>
+                <pre><code># Install dependencies
+sudo apt install python3 python3-pip v4l-utils
+
+# Clone and setup
+git clone https://github.com/yourusername/kamlux.git
+cd kamlux
+pip install numpy
+
+# Run directly
+python3 src/kamlux.py</code></pre>
+            </div>
+
+            <div class="install-method">
+                <h3>Fedora</h3>
+                <pre><code># Install dependencies
+sudo dnf install python3 python3-pip v4l-utils
+
+# Clone and setup
+git clone https://github.com/yourusername/kamlux.git
+cd kamlux
+pip install numpy
+
+# Run directly
+python3 src/kamlux.py</code></pre>
+            </div>
+        </section>
+
+        <section class="install-section">
+            <h2>Configuration</h2>
+            <p>After installation, config is at <code>~/.config/kamlux/config.json</code></p>
+            
+            <pre><code>{
+    "device": "/dev/video0",
+    "interval": 10,
+    "smoothing_alpha": 0.8,
+    "curve": [
+        [0.0, 100.0],
+        [0.31, 80.0],
+        [0.5, 40.0],
+        [0.8, 20.0],
+        [1.0, 5.0]
+    ],
+    "override_cooldown_minutes": 30
+}</code></pre>
+
+            <h3>Configuration Options</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Option</th>
+                        <th>Description</th>
+                        <th>Default</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>device</code></td>
+                        <td>Camera device path</td>
+                        <td>/dev/video0</td>
+                    </tr>
+                    <tr>
+                        <td><code>interval</code></td>
+                        <td>Seconds between brightness checks</td>
+                        <td>10</td>
+                    </tr>
+                    <tr>
+                        <td><code>smoothing_alpha</code></td>
+                        <td>Response speed (0.1=slow, 1.0=instant)</td>
+                        <td>0.8</td>
+                    </tr>
+                    <tr>
+                        <td><code>curve</code></td>
+                        <td>Maps darkness (0-1) to brightness (0-100%)</td>
+                        <td>See above</td>
+                    </tr>
+                    <tr>
+                        <td><code>override_cooldown_minutes</code></td>
+                        <td>Wait time after manual brightness change</td>
+                        <td>30</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section class="install-section">
+            <h2>Usage</h2>
+            
+            <h3>Commands</h3>
+            <pre><code># Run in terminal (for debugging)
+kamlux
+
+# Start service
+systemctl --user start kamlux
+
+# Stop service
+systemctl --user stop kamlux
+
+# Check status
+systemctl --user status kamlux
+
+# View logs
+journalctl --user -u kamlux -f</code></pre>
+        </section>
+
+        <section class="install-section">
+            <h2>Troubleshooting</h2>
+            
+            <div class="troubleshoot-item">
+                <h3>Brightness not changing?</h3>
+                <pre><code># Check camera is accessible
+v4l2-ctl -d /dev/video0 --get-ctrl=gain
+
+# Check KDE brightness control
+qdbus org.kde.Solid.PowerManagement /org/kde/Solid/PowerManagement/Actions/BrightnessControl org.kde.Solid.PowerManagement.Actions.BrightnessControl.brightness
+
+# Run in terminal to see debug output
+kamlux</code></pre>
+            </div>
+
+            <div class="troubleshoot-item">
+                <h3>Camera not detected?</h3>
+                <pre><code># Check available cameras
+ls /dev/video*
+
+# Update config with correct device
+nano ~/.config/kamlux/config.json</code></pre>
+            </div>
+
+            <div class="troubleshoot-item">
+                <h3>Service won't start?</h3>
+                <pre><code># Check logs
+journalctl --user -u kamlux.service
+
+# Try running manually
+python3 ~/.local/share/kamlux/kamlux.py</code></pre>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Kamlux. Open source under MIT License.</p>
+        <p>
+            <a href="https://github.com/yourusername/kamlux">GitHub</a> •
+            <a href="/install">Install</a> •
+            <a href="/about">About</a>
+        </p>
+    </footer>
+</body>
+</html>

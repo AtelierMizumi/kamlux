@@ -1,0 +1,15 @@
+compatibility_date = "2024-01-01"
+
+[build]
+  command = ""
+  directory = "/docs"
+
+[[redirects]]
+  from = "/about"
+  to = "/about.html"
+  status = 200
+
+[[redirects]]
+  from = "/install"
+  to = "/install.html"
+  status = 200

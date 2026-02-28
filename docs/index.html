@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kamlux - Auto Brightness for KDE Plasma</title>
+    <meta name="description" content="Automatic screen brightness adjustment daemon for KDE Plasma using camera-based ambient light detection">
+    <link rel="stylesheet" href="/styles.css">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>☀️</text></svg>">
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="/" class="logo">☀️ Kamlux</a>
+            <ul class="nav-links">
+                <li><a href="/">Home</a></li>
+                <li><a href="/install">Install</a></li>
+                <li><a href="/about">About</a></li>
+                <li><a href="https://github.com/yourusername/kamlux" target="_blank" rel="noopener">GitHub</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero">
+            <h1>Auto Brightness for KDE Plasma</h1>
+            <p class="tagline">Smart screen brightness that adapts to your environment using your camera</p>
+            <div class="cta-buttons">
+                <a href="/install" class="btn btn-primary">Get Started</a>
+                <a href="/about" class="btn btn-secondary">Learn More</a>
+            </div>
+        </section>
+
+        <section class="features">
+            <h2>Why Kamlux?</h2>
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">📷</div>
+                    <h3>Camera-Based</h3>
+                    <p>Uses your webcam's auto-exposure to detect ambient light levels - no extra hardware needed</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🎯</div>
+                    <h3>KDE Native</h3>
+                    <p>Integrates directly with KDE Plasma's brightness control via qdbus</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">✨</div>
+                    <h3>Smooth Transitions</h3>
+                    <p>Exponential moving average prevents jarring brightness changes</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔧</div>
+                    <h3>Fully Configurable</h3>
+                    <p>Customize brightness curves, intervals, and response speed to your preference</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="quick-start">
+            <h2>Quick Start</h2>
+            <pre><code>curl -sL https://kamlux.example.com/install-arch.sh | bash</code></pre>
+            <p>That's it! The installer will guide you through the setup.</p>
+        </section>
+
+        <section class="how-it-works">
+            <h2>How It Works</h2>
+            <div class="steps">
+                <div class="step">
+                    <span class="step-number">1</span>
+                    <h3>Detect Light</h3>
+                    <p>Your webcam's auto-exposure automatically adjusts to room lighting</p>
+                </div>
+                <div class="step">
+                    <span class="step-number">2</span>
+                    <h3>Calculate</h3>
+                    <p>Kamlux reads gain & exposure values to compute darkness score</p>
+                </div>
+                <div class="step">
+                    <span class="step-number">3</span>
+                    <h3>Adjust</h3>
+                    <p>Screen brightness smoothly adapts to match your environment</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Kamlux. Open source under MIT License.</p>
+        <p>
+            <a href="https://github.com/yourusername/kamlux">GitHub</a> •
+            <a href="/install">Install</a> •
+            <a href="/about">About</a>
+        </p>
+    </footer>
+</body>
+</html>
