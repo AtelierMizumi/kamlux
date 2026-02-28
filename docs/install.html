@@ -1,13 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Install - Kamlux</title>
     <meta name="description" content="Install Kamlux - Automatic brightness for KDE Plasma">
     <link rel="stylesheet" href="/styles.css">
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>☀️</text></svg>">
+    <link rel="icon" type="image/svg+xml"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>☀️</text></svg>">
 </head>
+
 <body>
     <header>
         <nav>
@@ -16,7 +19,7 @@
                 <li><a href="/">Home</a></li>
                 <li><a href="/install" class="active">Install</a></li>
                 <li><a href="/about">About</a></li>
-                <li><a href="https://github.com/yourusername/kamlux" target="_blank" rel="noopener">GitHub</a></li>
+                <li><a href="https://github.com/AtelierMizumi/kamlux" target="_blank" rel="noopener">GitHub</a></li>
             </ul>
         </nav>
     </header>
@@ -29,12 +32,12 @@
 
         <section class="install-section">
             <h2 id="arch-linux">Arch Linux</h2>
-            
+
             <div class="install-method">
                 <h3>Method 1: Quick Install (Recommended)</h3>
-                <pre><code>curl -sL https://yourusername.github.io/kamlux/install-arch.sh | bash</code></pre>
+                <pre><code>curl -sL https://AtelierMizumi.github.io/kamlux/install-arch.sh | bash</code></pre>
                 <p>Or download and run manually:</p>
-                <pre><code>wget https://yourusername.github.io/kamlux/install-arch.sh
+                <pre><code>wget https://AtelierMizumi.github.io/kamlux/install-arch.sh
 chmod +x install-arch.sh
 ./install-arch.sh</code></pre>
                 <p>The installer will:</p>
@@ -56,7 +59,7 @@ mkdir -p ~/.local/share/kamlux
 mkdir -p ~/.config/kamlux
 
 # Clone repository
-git clone https://github.com/yourusername/kamlux.git
+git clone https://github.com/AtelierMizumi/kamlux.git
 cd kamlux
 
 # Copy files
@@ -90,14 +93,14 @@ yay -S kamlux</code></pre>
 
         <section class="install-section">
             <h2 id="other-distros">Other Distributions</h2>
-            
+
             <div class="install-method">
                 <h3>Debian/Ubuntu</h3>
                 <pre><code># Install dependencies
 sudo apt install python3 python3-pip v4l-utils
 
 # Clone and setup
-git clone https://github.com/yourusername/kamlux.git
+git clone https://github.com/AtelierMizumi/kamlux.git
 cd kamlux
 pip install numpy
 
@@ -111,7 +114,7 @@ python3 src/kamlux.py</code></pre>
 sudo dnf install python3 python3-pip v4l-utils
 
 # Clone and setup
-git clone https://github.com/yourusername/kamlux.git
+git clone https://github.com/AtelierMizumi/kamlux.git
 cd kamlux
 pip install numpy
 
@@ -123,7 +126,7 @@ python3 src/kamlux.py</code></pre>
         <section class="install-section">
             <h2>Configuration</h2>
             <p>After installation, config is at <code>~/.config/kamlux/config.json</code></p>
-            
+
             <pre><code>{
     "device": "/dev/video0",
     "interval": 10,
@@ -179,7 +182,7 @@ python3 src/kamlux.py</code></pre>
 
         <section class="install-section">
             <h2>Usage</h2>
-            
+
             <h3>Commands</h3>
             <pre><code># Run in terminal (for debugging)
 kamlux
@@ -199,7 +202,7 @@ journalctl --user -u kamlux -f</code></pre>
 
         <section class="install-section">
             <h2>Troubleshooting</h2>
-            
+
             <div class="troubleshoot-item">
                 <h3>Brightness not changing?</h3>
                 <pre><code># Check camera is accessible
@@ -235,10 +238,11 @@ python3 ~/.local/share/kamlux/kamlux.py</code></pre>
     <footer>
         <p>&copy; 2024 Kamlux. Open source under MIT License.</p>
         <p>
-            <a href="https://github.com/yourusername/kamlux">GitHub</a> •
+            <a href="https://github.com/AtelierMizumi/kamlux">GitHub</a> •
             <a href="/install">Install</a> •
             <a href="/about">About</a>
         </p>
     </footer>
 </body>
+
 </html>

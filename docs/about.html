@@ -1,13 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>About - Kamlux</title>
     <meta name="description" content="About Kamlux - Automatic brightness control for KDE Plasma">
     <link rel="stylesheet" href="/styles.css">
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>☀️</text></svg>">
+    <link rel="icon" type="image/svg+xml"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>☀️</text></svg>">
 </head>
+
 <body>
     <header>
         <nav>
@@ -16,7 +19,7 @@
                 <li><a href="/">Home</a></li>
                 <li><a href="/install">Install</a></li>
                 <li><a href="/about" class="active">About</a></li>
-                <li><a href="https://github.com/yourusername/kamlux" target="_blank" rel="noopener">GitHub</a></li>
+                <li><a href="https://github.com/AtelierMizumi/kamlux" target="_blank" rel="noopener">GitHub</a></li>
             </ul>
         </nav>
     </header>
@@ -29,17 +32,23 @@
 
         <section class="about-section">
             <h2>What is Kamlux?</h2>
-            <p>Kamlux is an automatic screen brightness adjustment daemon designed specifically for KDE Plasma. It uses your computer's webcam to detect ambient light levels and adjusts your screen brightness accordingly - no external light sensors required.</p>
-            
-            <p>Unlike traditional solutions that require specialized hardware, Kamlux leverages the auto-exposure feature already built into your webcam to estimate room brightness. When it's dark, your screen dims. When it's bright, your screen brightens. Just like your phone, but for your Linux desktop.</p>
+            <p>Kamlux is an automatic screen brightness adjustment daemon designed specifically for KDE Plasma. It uses
+                your computer's webcam to detect ambient light levels and adjusts your screen brightness accordingly -
+                no external light sensors required.</p>
+
+            <p>Unlike traditional solutions that require specialized hardware, Kamlux leverages the auto-exposure
+                feature already built into your webcam to estimate room brightness. When it's dark, your screen dims.
+                When it's bright, your screen brightens. Just like your phone, but for your Linux desktop.</p>
         </section>
 
         <section class="about-section">
             <h2>How It Works</h2>
-            
+
             <div class="explanation">
                 <h3>1. Camera as Light Sensor</h3>
-                <p>Modern webcams have auto-exposure (AE) that automatically adjusts to lighting conditions. In a dark room, the camera increases gain and exposure time. In bright light, it decreases them. Kamlux reads these values to estimate ambient brightness.</p>
+                <p>Modern webcams have auto-exposure (AE) that automatically adjusts to lighting conditions. In a dark
+                    room, the camera increases gain and exposure time. In bright light, it decreases them. Kamlux reads
+                    these values to estimate ambient brightness.</p>
             </div>
 
             <div class="explanation">
@@ -75,19 +84,21 @@
 
         <section class="about-section">
             <h2>Why KDE Plasma?</h2>
-            <p>KDE Plasma provides excellent D-Bus interfaces for brightness control through PowerDevil. This makes it the ideal desktop environment for brightness automation because:</p>
+            <p>KDE Plasma provides excellent D-Bus interfaces for brightness control through PowerDevil. This makes it
+                the ideal desktop environment for brightness automation because:</p>
             <ul>
                 <li><strong>Native integration</strong> - Uses the same APIs as KDE's built-in brightness controls</li>
                 <li><strong>No conflicts</strong> - Properly respects KDE's power management</li>
                 <li><strong>Reliable</strong> - qdbus commands work consistently</li>
                 <li><strong>Percentage-based</strong> - Easy to map to 0-100% scale</li>
             </ul>
-            <p>While Kamlux is designed for KDE Plasma, the core logic could be adapted for other desktop environments that provide D-Bus or other brightness control APIs.</p>
+            <p>While Kamlux is designed for KDE Plasma, the core logic could be adapted for other desktop environments
+                that provide D-Bus or other brightness control APIs.</p>
         </section>
 
         <section class="about-section">
             <h2>Alternatives Considered</h2>
-            
+
             <table class="comparison-table">
                 <thead>
                     <tr>
@@ -128,7 +139,7 @@
 
         <section class="about-section">
             <h2>Technical Details</h2>
-            
+
             <h3>Dependencies</h3>
             <ul>
                 <li><strong>Python 3.10+</strong> - Main runtime</li>
@@ -155,17 +166,18 @@
                 <li>Submit a pull request</li>
                 <li>Improve documentation</li>
             </ul>
-            <p>Head over to <a href="https://github.com/yourusername/kamlux">GitHub</a> to get started.</p>
+            <p>Head over to <a href="https://github.com/AtelierMizumi/kamlux">GitHub</a> to get started.</p>
         </section>
     </main>
 
     <footer>
         <p>&copy; 2024 Kamlux. Open source under MIT License.</p>
         <p>
-            <a href="https://github.com/yourusername/kamlux">GitHub</a> •
+            <a href="https://github.com/AtelierMizumi/kamlux">GitHub</a> •
             <a href="/install">Install</a> •
             <a href="/about">About</a>
         </p>
     </footer>
 </body>
+
 </html>

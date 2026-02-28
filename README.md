@@ -37,13 +37,13 @@ The brightness curve maps darkness scores (0-1) to screen brightness (0-100%).
 ### Quick Install (Arch Linux)
 
 ```bash
-curl -sL https://yourusername.github.io/kamlux/install-arch.sh | bash
+curl -sL https://AtelierMizumi.github.io/kamlux/install-arch.sh | bash
 ```
 
 Or clone and run:
 
 ```bash
-git clone https://github.com/yourusername/kamlux.git
+git clone https://github.com/AtelierMizumi/kamlux.git
 cd kamlux
 ./install-arch.sh
 ```
@@ -192,7 +192,7 @@ The project includes a static website that can be deployed to Cloudflare Pages.
    - Build output directory: `/docs`
 6. Click "Save and Deploy"
 
-Your site will be available at `https://yourusername.pages.dev`
+Your site will be available at `https://AtelierMizumi.pages.dev`
 
 Or use direct upload:
 1. Go to Cloudflare Dashboard → Pages

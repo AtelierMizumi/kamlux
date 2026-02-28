@@ -14,7 +14,7 @@ Thank you for your interest in contributing to Kamlux!
 
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/kamlux.git
+git clone https://github.com/AtelierMizumi/kamlux.git
 cd kamlux
 
 # Create virtual environment

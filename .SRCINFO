@@ -2,7 +2,7 @@ pkgbase = kamlux
 	pkgdesc = Automatic screen brightness adjustment for KDE Plasma using camera-based ambient light detection
 	pkgver = 1.0.0
 	pkgrel = 1
-	url = https://github.com/yourusername/kamlux
+	url = https://github.com/AtelierMizumi/kamlux
 	arch = any
 	license = MIT
 	depends = python
@@ -11,7 +11,7 @@ pkgbase = kamlux
 	optdepends = plasma-desktop: for KDE Plasma integration
 	provides = kamlux
 	conflicts = kamlux
-	source = kamlux-1.0.0.tar.gz::https://github.com/yourusername/kamlux/archive/v1.0.0.tar.gz
+	source = kamlux-1.0.0.tar.gz::https://github.com/AtelierMizumi/kamlux/archive/v1.0.0.tar.gz
 	sha256sums = SKIP
 
 pkgname = kamlux

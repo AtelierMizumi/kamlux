@@ -228,7 +228,7 @@ setup_systemd() {
     cat > "$systemd_dir/kamlux.service" << EOF
 [Unit]
 Description=Kamlux - Auto Brightness Daemon
-Documentation=https://github.com/yourusername/kamlux
+Documentation=https://github.com/AtelierMizumi/kamlux
 After=graphical.target
 
 [Service]
